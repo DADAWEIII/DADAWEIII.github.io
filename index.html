@@ -47,6 +47,12 @@
             font-size: 0.875rem;
             font-weight: 500;
         }
+        .goal-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +66,7 @@
             <div class="hidden md:flex space-x-8">
                 <a href="#about" class="text-slate-600 hover:text-sky-600 transition">關於我</a>
                 <a href="#research" class="text-slate-600 hover:text-sky-600 transition">研究經歷</a>
-                <a href="#motivation" class="text-slate-600 hover:text-sky-600 transition">未來展望</a>
+                <a href="#goals" class="text-slate-600 hover:text-sky-600 transition">學習與成長</a>
             </div>
         </nav>
     </header>
@@ -159,21 +165,31 @@
             </div>
         </section>
 
-        <!-- Motivation Section -->
-        <section id="motivation" class="py-16">
-            <h2 class="section-title">未來展望</h2>
-            <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+        <!-- Goals Section -->
+        <section id="goals" class="py-16">
+            <h2 class="section-title">學習與成長目標</h2>
+            <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
+                <!-- Learning Goals -->
                 <div class="card p-8">
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">跨領域整合</h3>
-                    <p class="text-slate-600">深信生物醫學與AI、數據科學、光電技術的融合是未來趨勢，能加速醫療技術的創新發展。</p>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">學習方面</h3>
+                    <ul class="space-y-3 text-slate-600">
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg><span>逐步練習網站設計架設</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h1a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.884 5.064A9 9 0 1018.936 12M12 21v-4M12 3v4"></path></svg><span>每周背30個單字</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg><span>每周閱讀英文讀物與兩篇Paper</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg><span>每月讀一本課外書與了解兩隻股票</span></li>
+                    </ul>
+                    <p class="text-sm text-slate-400 mt-6 italic">“Once you stop learning, you start dying.” – Albert Einstein</p>
                 </div>
+                <!-- Health Goals -->
                 <div class="card p-8">
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">研究興趣方向</h3>
-                    <p class="text-slate-600">期望結合生物物理、化學與工程學知識，專注於奈米藥物遞送、超音波與細胞作用、生物感測等應用研究。</p>
-                </div>
-                <div class="card p-8">
-                    <h3 class="text-xl font-bold text-slate-800 mb-2">學術目標</h3>
-                    <p class="text-slate-600">期望在優越的研究環境中，基於生醫背景，進一步涉足生醫感測、光電生物物理等領域，持續學習成長。</p>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">健康方面</h3>
+                     <ul class="space-y-3 text-slate-600">
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg><span>養成固定運動習慣，每周至少4天</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span>規律作息：12:30前睡，7:30前起床</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-12v4m-2-2h4m6 4v4m-2-2h4M18 3a9 9 0 00-18 0h2a7 7 0 1114 0h2z"></path></svg><span>每周健身房兩練</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg><span>記得保濕、擦防曬，每天喝水3000ml</span></li>
+                    </ul>
+                    <p class="text-sm text-slate-400 mt-6 italic">“To enjoy the glow of good health, you must exercise.” – Gene Tunney</p>
                 </div>
             </div>
         </section>
