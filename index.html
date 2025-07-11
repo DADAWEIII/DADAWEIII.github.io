@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>張達瑋 | 數位作品集</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .section-title {
+            font-weight: 700;
+            font-size: 2.25rem; /* text-4xl */
+            color: #1e293b; /* slate-800 */
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0; /* slate-200 */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0f2fe; /* sky-100 */
+            color: #0369a1; /* sky-700 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-slate-800">
+                <a href="#">張達瑋</a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-slate-600 hover:text-sky-600 transition">關於我</a>
+                <a href="#research" class="text-slate-600 hover:text-sky-600 transition">研究經歷</a>
+                <a href="#motivation" class="text-slate-600 hover:text-sky-600 transition">未來展望</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Hero Section -->
+        <section class="text-center py-16 md:py-24">
+            <img src="https://placehold.co/150x150/e0f2fe/334155?text=DW" alt="張達瑋個人照片" class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full mb-6 border-4 border-white shadow-lg">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-2">張達瑋 | Da-Wei Chang</h1>
+            <p class="text-xl text-slate-600">對生物醫學充滿熱情，致力於跨領域整合與創新研究的探索者</p>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="py-16">
+            <h2 class="section-title">關於我</h2>
+            <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">學歷</h3>
+                    <div class="flex items-start space-x-4">
+                        <svg class="w-8 h-8 text-sky-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14zm-9 5l9-5 9 5"></path></svg>
+                        <div>
+                            <p class="text-lg font-semibold text-slate-700">中山醫學大學</p>
+                            <p class="text-slate-600">生物醫學科學學系</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">工作 & 社團經歷</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start space-x-4">
+                             <svg class="w-6 h-6 text-sky-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.616V21a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h7.384m7.616 5.616L12 21m0 0L4.5 13.5m0 0L12 6m0 0l7.5 7.5"></path></svg>
+                            <div><p class="font-semibold">生醫系男籃 副隊長</p><p class="text-sm text-slate-500">2022/05 - 2024/05</p></div>
+                        </li>
+                        <li class="flex items-start space-x-4">
+                            <svg class="w-6 h-6 text-sky-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            <div><p class="font-semibold">中山醫學大學 實驗動物中心</p><p class="text-sm text-slate-500">2023/02 - current</p></div>
+                        </li>
+                        <li class="flex items-start space-x-4">
+                            <svg class="w-6 h-6 text-sky-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            <div><p class="font-semibold">中山醫學大學 生醫系辦</p><p class="text-sm text-slate-500">2022/02 - current</p></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:col-span-2 card p-8">
+                     <h3 class="text-2xl font-bold text-slate-800 mb-4">實習 & 參訪經驗</h3>
+                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                        <div class="p-4 bg-slate-50 rounded-lg"><p class="font-semibold">中研院應科中心</p><p class="text-sm text-slate-500">大專生暑期實習</p></div>
+                        <div class="p-4 bg-slate-50 rounded-lg"><p class="font-semibold">2023 醫療科技展</p><p class="text-sm text-slate-500">參訪</p></div>
+                        <div class="p-4 bg-slate-50 rounded-lg"><p class="font-semibold">Microsoft</p><p class="text-sm text-slate-500">參訪</p></div>
+                        <div class="p-4 bg-slate-50 rounded-lg"><p class="font-semibold">Pfizer</p><p class="text-sm text-slate-500">參訪</p></div>
+                        <div class="p-4 bg-slate-50 rounded-lg"><p class="font-semibold">偉喬生醫</p><p class="text-sm text-slate-500">參訪</p></div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section id="research" class="py-16 bg-white rounded-2xl">
+            <h2 class="section-title">研究經歷</h2>
+            <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="card flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <span class="tag mb-2">大專生計畫</span>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">探討楊梅素(Myricetin)於A549細胞多重抗藥性之機制</h3>
+                        <p class="text-slate-600">研究Myricetin作為輔劑，觀察其對抗藥性肺癌細胞中ABC family蛋白及PI3K/AKT/NF-kB路徑的影響。</p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openModal('modal1')" class="w-full bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 transition-colors">查看詳情</button>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="card flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <span class="tag mb-2">專題研究</span>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">EGCG與TGF-β1對A549細胞EMT相關蛋白之影響</h3>
+                        <p class="text-slate-600">探討在TGF-β1誘導下，EGCG對肺癌細胞上皮間質轉化(EMT)相關蛋白(β-catenin, E-cadherin, snail)的調控作用。</p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openModal('modal2')" class="w-full bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 transition-colors">查看詳情</button>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="card flex flex-col">
+                    <div class="p-6 flex-grow">
+                        <span class="tag mb-2">中研院暑期研究</span>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">TGF-β1對口腔纖維母細胞3D牽引力之影響</h3>
+                        <p class="text-slate-600">利用三維牽引力顯微術(3D TFM)與免疫螢光染色，測量並觀察TGF-β1處理後，細胞牽引力與骨架的變化。</p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openModal('modal3')" class="w-full bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 transition-colors">查看詳情</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Motivation Section -->
+        <section id="motivation" class="py-16">
+            <h2 class="section-title">未來展望</h2>
+            <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">跨領域整合</h3>
+                    <p class="text-slate-600">深信生物醫學與AI、數據科學、光電技術的融合是未來趨勢，能加速醫療技術的創新發展。</p>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">研究興趣方向</h3>
+                    <p class="text-slate-600">期望結合生物物理、化學與工程學知識，專注於奈米藥物遞送、超音波與細胞作用、生物感測等應用研究。</p>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">學術目標</h3>
+                    <p class="text-slate-600">期望在優越的研究環境中，基於生醫背景，進一步涉足生醫感測、光電生物物理等領域，持續學習成長。</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white text-center py-6">
+        <p>&copy; 2024 張達瑋數位作品集. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Modal 1 -->
+    <div id="modal1" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-slate-800">研究計畫：多重抗藥性機制探討</h3>
+                <button onclick="closeModal('modal1')" class="text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <div class="p-8">
+                <h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4>
+                <p class="mb-6 text-slate-600">探討楊梅素(Myricetin)作為輔劑治療A549細胞之多重抗藥性(MDR)的相關機制</p>
+                
+                <h4 class="font-bold text-lg mb-2 text-slate-700">研究目標</h4>
+                <ol class="list-decimal list-inside space-y-2 mb-6 text-slate-600">
+                    <li>探討普通A549細胞與具doxorubicin抗藥性A549細胞之間，多重抗藥性相關蛋白(ABC family)的表現量變化。</li>
+                    <li>探討PI3K/AKT與NF-kB等路徑調節與多重抗藥性相關蛋白(ABC family)在A549細胞中的機轉作用。</li>
+                    <li>探討myricetin作為doxorubicin抗藥A549的輔佐劑，是否能更有效地降低多重抗藥性的表現。</li>
+                </ol>
+
+                <h4 class="font-bold text-lg mb-2 text-slate-700">實驗方法</h4>
+                <div class="flex flex-wrap gap-2">
+                    <span class="tag">西方點墨法 (Western Blot)</span>
+                    <span class="tag">細胞免疫螢光染色 (ICC)</span>
+                    <span class="tag">MTT assay</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div id="modal2" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-slate-800">專題研究：EMT相關蛋白表現</h3>
+                <button onclick="closeModal('modal2')" class="text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <div class="p-8">
+                <h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4>
+                <p class="mb-6 text-slate-600">兒茶素(EGCG)與TGF-β1對於A549 lung cancer在β-catenin、E-cadherin及snail的表現變化</p>
+
+                <h4 class="font-bold text-lg mb-2 text-slate-700">研究簡介</h4>
+                <p class="mb-6 text-slate-600">將A549細胞進行starvation後，觀察預先加入EGCG治療再暴露於TGF-β1的組別，與僅加入過量表現TGF-β1的組別，在E-cadherin、β-catenin以及snail等與EMT相關的蛋白變化情形。</p>
+
+                <h4 class="font-bold text-lg mb-2 text-slate-700">實驗結果</h4>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="text-center">
+                        <img src="https://i.imgur.com/k2gXJgW.png" alt="西方點墨法結果圖" class="rounded-lg shadow-md mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/400x300/f0f0f0/c0c0c0?text=Western+Blot';">
+                        <p class="text-sm text-slate-500 mt-2">圖一：西方點墨法結果</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="https://i.imgur.com/4gQ2qgH.png" alt="β-catenin表現量化圖" class="rounded-lg shadow-md mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/400x300/f0f0f0/c0c0c0?text=Quantification';">
+                        <p class="text-sm text-slate-500 mt-2">圖二：β-catenin表現量化圖</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div id="modal3" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-slate-800">暑期研究：細胞3D牽引力</h3>
+                <button onclick="closeModal('modal3')" class="text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <div class="p-8">
+                <h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4>
+                <p class="mb-6 text-slate-600">探討TGF-β1對口腔纖維母細胞3D牽引力的影響</p>
+
+                <h4 class="font-bold text-lg mb-2 text-slate-700">研究簡介</h4>
+                <p class="mb-6 text-slate-600">使用三維牽引力顯微術(3D TFM)測量了暴露於TGF-β1下的口腔黏膜纖維母細胞(OMFs)的牽引力。此外，也透過F-肌動蛋白免疫螢光染色觀察了細胞骨架的變化。結果顯示，在測試濃度下，TGF-β1對OMFs的牽引力沒有顯著影響。</p>
+
+                <h4 class="font-bold text-lg mb-2 text-slate-700">研究海報摘要</h4>
+                <div class="bg-slate-50 p-4 rounded-lg">
+                    <img src="https://i.imgur.com/G5g2BqA.png" alt="研究海報" class="rounded-lg shadow-md w-full" onerror="this.onerror=null;this.src='https://placehold.co/800x600/f0f0f0/c0c0c0?text=Research+Poster';">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Modal Logic ---
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const modalContent = modal.querySelector('.modal-content');
+            modal.classList.remove('invisible', 'opacity-0');
+            modal.classList.add('visible', 'opacity-100');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            const modalContent = modal.querySelector('.modal-content');
+            modal.classList.remove('visible', 'opacity-100');
+            modal.classList.add('invisible', 'opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal on escape key press
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (modal.classList.contains('visible')) {
+                        closeModal(modal.id);
+                    }
+                });
+            }
+        });
+
+        // Close modal on background click
+        window.addEventListener('click', (e) => {
+             if (e.target.classList.contains('modal')) {
+                closeModal(e.target.id);
+             }
+        });
+
+
+        // --- Smooth Scrolling ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
