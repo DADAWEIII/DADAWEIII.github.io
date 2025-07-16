@@ -179,9 +179,14 @@
             <h2 class="section-title">學習與成長目標</h2>
             <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
                 <!-- Learning Goals -->
-                <div class="card p-8 flex flex-col justify-center items-center">
+                <div class="card p-8">
                     <h3 class="text-2xl font-bold text-slate-800 mb-4">學習方面</h3>
-                    <p class="text-slate-600 text-center mb-6">記錄我的知識探索與技能成長之旅。</p>
+                    <ul class="space-y-3 text-slate-600 mb-6">
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg><span>逐步練習網站設計架設</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h1a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.884 5.064A9 9 0 1018.936 12M12 21v-4M12 3v4"></path></svg><span>每周背30個單字</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg><span>每周閱讀英文讀物與兩篇Paper</span></li>
+                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg><span>每月讀一本課外書與了解兩隻股票</span></li>
+                    </ul>
                     <button onclick="openModal('modal4')" class="w-full bg-sky-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-600 transition-colors">開啟學習紀錄</button>
                 </div>
                 <!-- Health Goals -->
@@ -227,12 +232,12 @@
                 <!-- Stock Learning Content -->
                 <div id="content-stock" class="tab-content">
                     <h4 class="text-xl font-bold text-slate-700 mb-4">股票學習紀錄</h4>
-                    <textarea class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的股票學習筆記..."></textarea>
+                    <textarea id="stock-notes-textarea" class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的股票學習筆記..."></textarea>
                 </div>
                 <!-- Book Reading Content -->
                 <div id="content-books" class="tab-content hidden">
                     <h4 class="text-xl font-bold text-slate-700 mb-4">讀書心得</h4>
-                    <textarea class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的讀書心得..."></textarea>
+                    <textarea id="book-notes-textarea" class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的讀書心得..."></textarea>
                 </div>
             </div>
         </div>
@@ -306,6 +311,34 @@
             document.getElementById('content-' + tabName).classList.remove('hidden');
             document.getElementById('tab-' + tabName).classList.add('active');
         }
+
+        // --- Learning Log Persistence ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const stockTextarea = document.getElementById('stock-notes-textarea');
+            const bookTextarea = document.getElementById('book-notes-textarea');
+
+            if (stockTextarea && bookTextarea) {
+                // Load saved notes
+                const savedStockNotes = localStorage.getItem('davie_stockNotes');
+                const savedBookNotes = localStorage.getItem('davie_bookNotes');
+
+                if (savedStockNotes) {
+                    stockTextarea.value = savedStockNotes;
+                }
+                if (savedBookNotes) {
+                    bookTextarea.value = savedBookNotes;
+                }
+
+                // Save notes on input
+                stockTextarea.addEventListener('input', () => {
+                    localStorage.setItem('davie_stockNotes', stockTextarea.value);
+                });
+
+                bookTextarea.addEventListener('input', () => {
+                    localStorage.setItem('davie_bookNotes', bookTextarea.value);
+                });
+            }
+        });
     </script>
 
 </body>
