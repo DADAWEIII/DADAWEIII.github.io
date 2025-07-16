@@ -53,6 +53,15 @@
             flex-shrink: 0;
             margin-top: 0.25rem;
         }
+        /* Tab Styles */
+        .tab-button.active {
+            background-color: #0ea5e9; /* sky-500 */
+            color: white;
+        }
+        .tab-button {
+            background-color: #e2e8f0; /* slate-200 */
+            color: #475569; /* slate-600 */
+        }
     </style>
 </head>
 <body>
@@ -170,15 +179,10 @@
             <h2 class="section-title">學習與成長目標</h2>
             <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-start">
                 <!-- Learning Goals -->
-                <div class="card p-8">
+                <div class="card p-8 flex flex-col justify-center items-center">
                     <h3 class="text-2xl font-bold text-slate-800 mb-4">學習方面</h3>
-                    <ul class="space-y-3 text-slate-600">
-                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg><span>逐步練習網站設計架設</span></li>
-                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2h1a2 2 0 002-2v-1a2 2 0 012-2h1.945M7.884 5.064A9 9 0 1018.936 12M12 21v-4M12 3v4"></path></svg><span>每周背30個單字</span></li>
-                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg><span>每周閱讀英文讀物與兩篇Paper</span></li>
-                        <li class="flex items-start space-x-3"><svg class="goal-icon text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg><span>每月讀一本課外書與了解兩隻股票</span></li>
-                    </ul>
-                    <p class="text-sm text-slate-400 mt-6 italic">“Once you stop learning, you start dying.” – Albert Einstein</p>
+                    <p class="text-slate-600 text-center mb-6">記錄我的知識探索與技能成長之旅。</p>
+                    <button onclick="openModal('modal4')" class="w-full bg-sky-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-600 transition-colors">開啟學習紀錄</button>
                 </div>
                 <!-- Health Goals -->
                 <div class="card p-8">
@@ -189,7 +193,6 @@
                         <li class="flex items-start space-x-3"><svg class="goal-icon text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-12v4m-2-2h4m6 4v4m-2-2h4M18 3a9 9 0 00-18 0h2a7 7 0 1114 0h2z"></path></svg><span>每周健身房兩練</span></li>
                         <li class="flex items-start space-x-3"><svg class="goal-icon text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg><span>記得保濕、擦防曬，每天喝水3000ml</span></li>
                     </ul>
-                    <p class="text-sm text-slate-400 mt-6 italic">“To enjoy the glow of good health, you must exercise.” – Gene Tunney</p>
                 </div>
             </div>
         </section>
@@ -202,89 +205,45 @@
     </footer>
 
     <!-- Modals -->
-    <!-- Modal 1 -->
-    <div id="modal1" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
-        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95">
-            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center">
-                <h3 class="text-2xl font-bold text-slate-800">研究計畫：多重抗藥性機制探討</h3>
-                <button onclick="closeModal('modal1')" class="text-slate-500 hover:text-slate-800">&times;</button>
-            </div>
-            <div class="p-8">
-                <h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4>
-                <p class="mb-6 text-slate-600">探討楊梅素(Myricetin)作為輔劑治療A549細胞之多重抗藥性(MDR)的相關機制</p>
-                
-                <h4 class="font-bold text-lg mb-2 text-slate-700">研究目標</h4>
-                <ol class="list-decimal list-inside space-y-2 mb-6 text-slate-600">
-                    <li>探討普通A549細胞與具doxorubicin抗藥性A549細胞之間，多重抗藥性相關蛋白(ABC family)的表現量變化。</li>
-                    <li>探討PI3K/AKT與NF-kB等路徑調節與多重抗藥性相關蛋白(ABC family)在A549細胞中的機轉作用。</li>
-                    <li>探討myricetin作為doxorubicin抗藥A549的輔佐劑，是否能更有效地降低多重抗藥性的表現。</li>
-                </ol>
+    <!-- Research Modals (1, 2, 3) -->
+    <div id="modal1" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0"><div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95"><div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center"><h3 class="text-2xl font-bold text-slate-800">研究計畫：多重抗藥性機制探討</h3><button onclick="closeModal('modal1')" class="text-slate-500 hover:text-slate-800 text-3xl leading-none">&times;</button></div><div class="p-8"><h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4><p class="mb-6 text-slate-600">探討楊梅素(Myricetin)作為輔劑治療A549細胞之多重抗藥性(MDR)的相關機制</p><h4 class="font-bold text-lg mb-2 text-slate-700">研究目標</h4><ol class="list-decimal list-inside space-y-2 mb-6 text-slate-600"><li>探討普通A549細胞與具doxorubicin抗藥性A549細胞之間，多重抗藥性相關蛋白(ABC family)的表現量變化。</li><li>探討PI3K/AKT與NF-kB等路徑調節與多重抗藥性相關蛋白(ABC family)在A549細胞中的機轉作用。</li><li>探討myricetin作為doxorubicin抗藥A549的輔佐劑，是否能更有效地降低多重抗藥性的表現。</li></ol><h4 class="font-bold text-lg mb-2 text-slate-700">實驗方法</h4><div class="flex flex-wrap gap-2"><span class="tag">西方點墨法 (Western Blot)</span><span class="tag">細胞免疫螢光染色 (ICC)</span><span class="tag">MTT assay</span></div></div></div></div>
+    <div id="modal2" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0"><div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95"><div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center"><h3 class="text-2xl font-bold text-slate-800">專題研究：EMT相關蛋白表現</h3><button onclick="closeModal('modal2')" class="text-slate-500 hover:text-slate-800 text-3xl leading-none">&times;</button></div><div class="p-8"><h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4><p class="mb-6 text-slate-600">兒茶素(EGCG)與TGF-β1對於A549 lung cancer在β-catenin、E-cadherin及snail的表現變化</p><h4 class="font-bold text-lg mb-2 text-slate-700">研究簡介</h4><p class="mb-6 text-slate-600">將A549細胞進行starvation後，觀察預先加入EGCG治療再暴露於TGF-β1的組別，與僅加入過量表現TGF-β1的組別，在E-cadherin、β-catenin以及snail等與EMT相關的蛋白變化情形。</p><h4 class="font-bold text-lg mb-2 text-slate-700">實驗結果</h4><div class="grid md:grid-cols-2 gap-6"><div class="text-center"><img src="https://i.imgur.com/k2gXJgW.png" alt="西方點墨法結果圖" class="rounded-lg shadow-md mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/400x300/f0f0f0/c0c0c0?text=Western+Blot';"><p class="text-sm text-slate-500 mt-2">圖一：西方點墨法結果</p></div><div class="text-center"><img src="https://i.imgur.com/4gQ2qgH.png" alt="β-catenin表現量化圖" class="rounded-lg shadow-md mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/400x300/f0f0f0/c0c0c0?text=Quantification';"><p class="text-sm text-slate-500 mt-2">圖二：β-catenin表現量化圖</p></div></div></div></div></div>
+    <div id="modal3" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0"><div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto transform scale-95"><div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center"><h3 class="text-2xl font-bold text-slate-800">暑期研究：細胞3D牽引力</h3><button onclick="closeModal('modal3')" class="text-slate-500 hover:text-slate-800 text-3xl leading-none">&times;</button></div><div class="p-8"><h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4><p class="mb-6 text-slate-600">探討TGF-β1對口腔纖維母細胞3D牽引力的影響</p><h4 class="font-bold text-lg mb-2 text-slate-700">研究簡介</h4><p class="mb-6 text-slate-600">使用三維牽引力顯微術(3D TFM)測量了暴露於TGF-β1下的口腔黏膜纖維母細胞(OMFs)的牽引力。此外，也透過F-肌動蛋白免疫螢光染色觀察了細胞骨架的變化。結果顯示，在測試濃度下，TGF-β1對OMFs的牽引力沒有顯著影響。</p><h4 class="font-bold text-lg mb-2 text-slate-700">研究海報摘要</h4><div class="bg-slate-50 p-4 rounded-lg"><img src="https://i.imgur.com/G5g2BqA.png" alt="研究海報" class="rounded-lg shadow-md w-full" onerror="this.onerror=null;this.src='https://placehold.co/800x600/f0f0f0/c0c0c0?text=Research+Poster';"></div></div></div></div>
 
-                <h4 class="font-bold text-lg mb-2 text-slate-700">實驗方法</h4>
-                <div class="flex flex-wrap gap-2">
-                    <span class="tag">西方點墨法 (Western Blot)</span>
-                    <span class="tag">細胞免疫螢光染色 (ICC)</span>
-                    <span class="tag">MTT assay</span>
+    <!-- Learning Log Modal -->
+    <div id="modal4" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col transform scale-95">
+            <div class="p-6 border-b border-slate-200 flex justify-between items-center flex-shrink-0">
+                <h3 class="text-2xl font-bold text-slate-800">我的學習紀錄</h3>
+                <button onclick="closeModal('modal4')" class="text-slate-500 hover:text-slate-800 text-3xl leading-none">&times;</button>
+            </div>
+            <div class="p-6 flex-shrink-0 border-b border-slate-200">
+                <div class="flex space-x-2">
+                    <button onclick="switchTab('stock')" id="tab-stock" class="tab-button flex-1 py-2 px-4 rounded-md font-semibold transition-colors active">股票學習紀錄</button>
+                    <button onclick="switchTab('books')" id="tab-books" class="tab-button flex-1 py-2 px-4 rounded-md font-semibold transition-colors">讀書心得</button>
+                </div>
+            </div>
+            <div class="p-6 overflow-y-auto flex-grow">
+                <!-- Stock Learning Content -->
+                <div id="content-stock" class="tab-content">
+                    <h4 class="text-xl font-bold text-slate-700 mb-4">股票學習紀錄</h4>
+                    <textarea class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的股票學習筆記..."></textarea>
+                </div>
+                <!-- Book Reading Content -->
+                <div id="content-books" class="tab-content hidden">
+                    <h4 class="text-xl font-bold text-slate-700 mb-4">讀書心得</h4>
+                    <textarea class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的讀書心得..."></textarea>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal 2 -->
-    <div id="modal2" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
-        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto transform scale-95">
-            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center">
-                <h3 class="text-2xl font-bold text-slate-800">專題研究：EMT相關蛋白表現</h3>
-                <button onclick="closeModal('modal2')" class="text-slate-500 hover:text-slate-800">&times;</button>
-            </div>
-            <div class="p-8">
-                <h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4>
-                <p class="mb-6 text-slate-600">兒茶素(EGCG)與TGF-β1對於A549 lung cancer在β-catenin、E-cadherin及snail的表現變化</p>
-
-                <h4 class="font-bold text-lg mb-2 text-slate-700">研究簡介</h4>
-                <p class="mb-6 text-slate-600">將A549細胞進行starvation後，觀察預先加入EGCG治療再暴露於TGF-β1的組別，與僅加入過量表現TGF-β1的組別，在E-cadherin、β-catenin以及snail等與EMT相關的蛋白變化情形。</p>
-
-                <h4 class="font-bold text-lg mb-2 text-slate-700">實驗結果</h4>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="text-center">
-                        <img src="https://i.imgur.com/k2gXJgW.png" alt="西方點墨法結果圖" class="rounded-lg shadow-md mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/400x300/f0f0f0/c0c0c0?text=Western+Blot';">
-                        <p class="text-sm text-slate-500 mt-2">圖一：西方點墨法結果</p>
-                    </div>
-                    <div class="text-center">
-                        <img src="https://i.imgur.com/4gQ2qgH.png" alt="β-catenin表現量化圖" class="rounded-lg shadow-md mx-auto" onerror="this.onerror=null;this.src='https://placehold.co/400x300/f0f0f0/c0c0c0?text=Quantification';">
-                        <p class="text-sm text-slate-500 mt-2">圖二：β-catenin表現量化圖</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 3 -->
-    <div id="modal3" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
-        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto transform scale-95">
-            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center">
-                <h3 class="text-2xl font-bold text-slate-800">暑期研究：細胞3D牽引力</h3>
-                <button onclick="closeModal('modal3')" class="text-slate-500 hover:text-slate-800">&times;</button>
-            </div>
-            <div class="p-8">
-                <h4 class="font-bold text-lg mb-2 text-slate-700">題目</h4>
-                <p class="mb-6 text-slate-600">探討TGF-β1對口腔纖維母細胞3D牽引力的影響</p>
-
-                <h4 class="font-bold text-lg mb-2 text-slate-700">研究簡介</h4>
-                <p class="mb-6 text-slate-600">使用三維牽引力顯微術(3D TFM)測量了暴露於TGF-β1下的口腔黏膜纖維母細胞(OMFs)的牽引力。此外，也透過F-肌動蛋白免疫螢光染色觀察了細胞骨架的變化。結果顯示，在測試濃度下，TGF-β1對OMFs的牽引力沒有顯著影響。</p>
-
-                <h4 class="font-bold text-lg mb-2 text-slate-700">研究海報摘要</h4>
-                <div class="bg-slate-50 p-4 rounded-lg">
-                    <img src="https://i.imgur.com/G5g2BqA.png" alt="研究海報" class="rounded-lg shadow-md w-full" onerror="this.onerror=null;this.src='https://placehold.co/800x600/f0f0f0/c0c0c0?text=Research+Poster';">
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         // --- Modal Logic ---
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
+            if (!modal) return;
             const modalContent = modal.querySelector('.modal-content');
             modal.classList.remove('invisible', 'opacity-0');
             modal.classList.add('visible', 'opacity-100');
@@ -295,6 +254,7 @@
 
         function closeModal(modalId) {
             const modal = document.getElementById(modalId);
+            if (!modal) return;
             const modalContent = modal.querySelector('.modal-content');
             modal.classList.remove('visible', 'opacity-100');
             modal.classList.add('invisible', 'opacity-0');
@@ -306,10 +266,8 @@
         // Close modal on escape key press
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => {
-                    if (modal.classList.contains('visible')) {
-                        closeModal(modal.id);
-                    }
+                document.querySelectorAll('.modal.visible').forEach(modal => {
+                    closeModal(modal.id);
                 });
             }
         });
@@ -321,16 +279,33 @@
              }
         });
 
-
         // --- Smooth Scrolling ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
+
+        // --- Tab Switching Logic for Learning Log Modal ---
+        function switchTab(tabName) {
+            // Hide all content
+            document.getElementById('content-stock').classList.add('hidden');
+            document.getElementById('content-books').classList.add('hidden');
+
+            // Deactivate all tab buttons
+            document.getElementById('tab-stock').classList.remove('active');
+            document.getElementById('tab-books').classList.remove('active');
+
+            // Show selected content and activate selected tab
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
     </script>
 
 </body>
