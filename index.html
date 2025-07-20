@@ -62,6 +62,18 @@
             background-color: #e2e8f0; /* slate-200 */
             color: #475569; /* slate-600 */
         }
+        /* Chat bubble styles */
+        .chat-bubble {
+            background-color: #e0f2fe; /* sky-100 */
+            color: #0c4a6e; /* sky-900 */
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .chat-bubble p {
+            white-space: pre-wrap; /* This is key for showing newlines */
+        }
     </style>
 </head>
 <body>
@@ -217,27 +229,24 @@
 
     <!-- Learning Log Modal -->
     <div id="modal4" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 invisible opacity-0">
-        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col transform scale-95">
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-3xl h-[90vh] flex flex-col transform scale-95">
             <div class="p-6 border-b border-slate-200 flex justify-between items-center flex-shrink-0">
                 <h3 class="text-2xl font-bold text-slate-800">我的學習紀錄</h3>
                 <button onclick="closeModal('modal4')" class="text-slate-500 hover:text-slate-800 text-3xl leading-none">&times;</button>
             </div>
-            <div class="p-6 flex-shrink-0 border-b border-slate-200">
+            <div class="p-4 flex-shrink-0 border-b border-slate-200">
                 <div class="flex space-x-2">
                     <button onclick="switchTab('stock')" id="tab-stock" class="tab-button flex-1 py-2 px-4 rounded-md font-semibold transition-colors active">股票學習紀錄</button>
                     <button onclick="switchTab('books')" id="tab-books" class="tab-button flex-1 py-2 px-4 rounded-md font-semibold transition-colors">讀書心得</button>
                 </div>
             </div>
-            <div class="p-6 overflow-y-auto flex-grow">
-                <!-- Stock Learning Content -->
-                <div id="content-stock" class="tab-content">
-                    <h4 class="text-xl font-bold text-slate-700 mb-4">股票學習紀錄</h4>
-                    <textarea id="stock-notes-textarea" class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的股票學習筆記..."></textarea>
-                </div>
-                <!-- Book Reading Content -->
-                <div id="content-books" class="tab-content hidden">
-                    <h4 class="text-xl font-bold text-slate-700 mb-4">讀書心得</h4>
-                    <textarea id="book-notes-textarea" class="w-full h-64 p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" placeholder="在這裡輸入您的讀書心得..."></textarea>
+            <div id="chat-container" class="flex-grow p-4 overflow-y-auto space-y-4">
+                <!-- Chat messages will be dynamically inserted here -->
+            </div>
+            <div class="p-4 border-t border-slate-200 flex-shrink-0">
+                <div class="flex items-start space-x-2">
+                    <textarea id="chat-input" class="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 resize-none" placeholder="輸入紀錄..." rows="2"></textarea>
+                    <button id="send-button" class="bg-sky-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-600 transition-colors flex-shrink-0">送出</button>
                 </div>
             </div>
         </div>
@@ -254,7 +263,7 @@
             modal.classList.add('visible', 'opacity-100');
             modalContent.classList.remove('scale-95');
             modalContent.classList.add('scale-100');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal(modalId) {
@@ -268,16 +277,12 @@
             document.body.style.overflow = 'auto';
         }
         
-        // Close modal on escape key press
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.visible').forEach(modal => {
-                    closeModal(modal.id);
-                });
+                document.querySelectorAll('.modal.visible').forEach(modal => closeModal(modal.id));
             }
         });
 
-        // Close modal on background click
         window.addEventListener('click', (e) => {
              if (e.target.classList.contains('modal')) {
                 closeModal(e.target.id);
@@ -290,54 +295,180 @@
                 e.preventDefault();
                 const targetElement = document.querySelector(this.getAttribute('href'));
                 if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
 
-        // --- Tab Switching Logic for Learning Log Modal ---
-        function switchTab(tabName) {
-            // Hide all content
-            document.getElementById('content-stock').classList.add('hidden');
-            document.getElementById('content-books').classList.add('hidden');
+        // --- Learning Log Chat Logic ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatContainer = document.getElementById('chat-container');
+            const chatInput = document.getElementById('chat-input');
+            const sendButton = document.getElementById('send-button');
+            const stockTab = document.getElementById('tab-stock');
+            const booksTab = document.getElementById('tab-books');
+            
+            let currentTab = 'stock';
+            let messages = {
+                stock: [],
+                books: []
+            };
 
-            // Deactivate all tab buttons
-            document.getElementById('tab-stock').classList.remove('active');
-            document.getElementById('tab-books').classList.remove('active');
-
-            // Show selected content and activate selected tab
-            document.getElementById('content-' + tabName).classList.remove('hidden');
-            document.getElementById('tab-' + tabName).classList.add('active');
-        }
-
-        // --- Learning Log Persistence ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const stockTextarea = document.getElementById('stock-notes-textarea');
-            const bookTextarea = document.getElementById('book-notes-textarea');
-
-            if (stockTextarea && bookTextarea) {
-                // Load saved notes
-                const savedStockNotes = localStorage.getItem('davie_stockNotes');
-                const savedBookNotes = localStorage.getItem('davie_bookNotes');
-
-                if (savedStockNotes) {
-                    stockTextarea.value = savedStockNotes;
-                }
-                if (savedBookNotes) {
-                    bookTextarea.value = savedBookNotes;
-                }
-
-                // Save notes on input
-                stockTextarea.addEventListener('input', () => {
-                    localStorage.setItem('davie_stockNotes', stockTextarea.value);
-                });
-
-                bookTextarea.addEventListener('input', () => {
-                    localStorage.setItem('davie_bookNotes', bookTextarea.value);
+            // Auto-resize textarea
+            if(chatInput) {
+                chatInput.addEventListener('input', () => {
+                    chatInput.style.height = 'auto';
+                    chatInput.style.height = (chatInput.scrollHeight) + 'px';
                 });
             }
+
+
+            // Load messages from localStorage
+            const loadMessages = () => {
+                try {
+                    const savedMessages = localStorage.getItem('davie_chatMessages');
+                    if (savedMessages) {
+                        messages = JSON.parse(savedMessages);
+                        // Ensure the data structure is correct
+                        if (!messages.stock) messages.stock = [];
+                        if (!messages.books) messages.books = [];
+                    }
+                } catch (e) {
+                    console.error("Failed to load or parse messages from localStorage", e);
+                    messages = { stock: [], books: [] };
+                }
+            };
+
+            // Save messages to localStorage
+            const saveMessages = () => {
+                try {
+                    localStorage.setItem('davie_chatMessages', JSON.stringify(messages));
+                } catch (e) {
+                    console.error("Failed to save messages to localStorage", e);
+                }
+            };
+
+            // Render messages for the current tab
+            const renderMessages = () => {
+                if (!chatContainer) return;
+                chatContainer.innerHTML = '';
+                if(!messages[currentTab]) messages[currentTab] = []; // Defensive check
+                
+                messages[currentTab].forEach(msg => {
+                    const msgElement = document.createElement('div');
+                    msgElement.classList.add('flex', 'flex-col', 'items-start', 'group');
+                    msgElement.setAttribute('data-id', msg.id);
+
+                    // Sanitize text before inserting to prevent XSS
+                    const sanitizedText = msg.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+                    msgElement.innerHTML = `
+                        <div class="chat-bubble">
+                            <p class="flex-grow">${sanitizedText}</p>
+                        </div>
+                        <div class="flex items-center space-x-2 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                             <span class="text-xs text-slate-400">${new Date(msg.timestamp).toLocaleString('zh-TW')}</span>
+                             <button data-action="edit" class="text-xs text-sky-600 hover:underline">編輯</button>
+                             <button data-action="delete" class="text-xs text-red-600 hover:underline">刪除</button>
+                        </div>
+                    `;
+                    chatContainer.appendChild(msgElement);
+                });
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            };
+            
+            // Add a new message
+            const addMessage = () => {
+                const text = chatInput.value.trim();
+                if (text === '') return;
+
+                const newMessage = {
+                    id: Date.now(),
+                    text: text,
+                    timestamp: new Date().toISOString()
+                };
+
+                messages[currentTab].push(newMessage);
+                saveMessages();
+                renderMessages();
+                chatInput.value = '';
+                chatInput.style.height = 'auto'; // Reset height
+                chatInput.focus();
+            };
+
+            // Handle Clicks on Edit/Delete/Save/Cancel
+            const handleContainerClick = (e) => {
+                const action = e.target.dataset.action;
+                if (!action) return;
+
+                const msgElement = e.target.closest('.flex.flex-col');
+                const msgId = Number(msgElement.dataset.id);
+
+                if (action === 'delete') {
+                    messages[currentTab] = messages[currentTab].filter(msg => msg.id !== msgId);
+                    saveMessages();
+                    renderMessages();
+                }
+
+                if (action === 'edit') {
+                    const bubble = msgElement.querySelector('.chat-bubble');
+                    const currentText = messages[currentTab].find(msg => msg.id === msgId).text;
+                    
+                    bubble.innerHTML = `
+                        <textarea class="w-full bg-white p-2 rounded-md border border-sky-400 focus:outline-none resize-none" rows="4">${currentText}</textarea>
+                    `;
+                    const editButtons = msgElement.querySelector('.flex.items-center.space-x-2');
+                    editButtons.innerHTML = `
+                        <button data-action="save" class="text-xs text-green-600 hover:underline">儲存</button>
+                        <button data-action="cancel" class="text-xs text-slate-500 hover:underline">取消</button>
+                    `;
+                    
+                    const textarea = bubble.querySelector('textarea');
+                    textarea.style.height = textarea.scrollHeight + 'px';
+                    textarea.focus();
+                    textarea.addEventListener('input', () => {
+                        textarea.style.height = 'auto';
+                        textarea.style.height = textarea.scrollHeight + 'px';
+                    });
+                }
+
+                if (action === 'save') {
+                    const textarea = msgElement.querySelector('textarea');
+                    const newText = textarea.value.trim();
+                    if (newText) {
+                         const msgIndex = messages[currentTab].findIndex(msg => msg.id === msgId);
+                         if(msgIndex > -1) {
+                            messages[currentTab][msgIndex].text = newText;
+                            saveMessages();
+                         }
+                    }
+                    renderMessages();
+                }
+
+                if (action === 'cancel') {
+                    renderMessages();
+                }
+            };
+
+            // Switch between tabs
+            window.switchTab = (tabName) => {
+                currentTab = tabName;
+                stockTab.classList.toggle('active', tabName === 'stock');
+                booksTab.classList.toggle('active', tabName === 'books');
+                renderMessages();
+            };
+            
+            // Event Listeners
+            if (sendButton) {
+                sendButton.addEventListener('click', addMessage);
+            }
+            if (chatContainer) {
+                chatContainer.addEventListener('click', handleContainerClick);
+            }
+
+            // Initial Load
+            loadMessages();
+            renderMessages();
         });
     </script>
 
