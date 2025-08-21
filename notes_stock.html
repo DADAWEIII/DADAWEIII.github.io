@@ -13,100 +13,299 @@
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
             background-color: #f8fafc;
         }
+        /* 功能: 模塊卡片的 hover 效果 */
+        .note-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            word-break: break-word; /* 讓長單字可以換行 */
+        }
+        .note-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        /* 功能: 隱藏頁面的 class，用於切換視圖 */
+        .page-hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <header class="bg-white shadow-sm">
-        <div class="container mx-auto px-6 py-4">
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="goals.html" class="text-sky-600 hover:text-sky-800 transition font-semibold">
                 &larr; 返回學習與成長
             </a>
+            <h1 id="header-title" class="text-xl font-bold text-slate-800">股票學習筆記</h1>
         </div>
     </header>
 
     <main class="container mx-auto px-6 py-12">
-        <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow">
-            <h1 class="text-3xl font-bold text-slate-800 mb-6 border-b pb-4">股票學習筆記</h1>
-            
-            <textarea 
-                id="notes-area" 
-                class="w-full h-96 p-4 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" 
-                placeholder="在這裡開始記錄您的股票學習重點..."></textarea>
-            
-            <div class="mt-6 flex items-center justify-end space-x-4">
-                <p id="status-message" class="text-green-600 font-semibold"></p>
-                
-                <button id="save-button" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">
-                    儲存筆記
+        <div id="list-page">
+            <div id="notes-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <button id="add-new-note-btn" class="note-card aspect-square flex flex-col justify-center items-center bg-slate-100 hover:bg-slate-200 rounded-lg p-4 text-center border-2 border-dashed border-slate-300">
+                    <svg class="w-12 h-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    <span class="font-semibold text-slate-600 mt-2">新增紀錄</span>
                 </button>
             </div>
         </div>
+
+        <div id="editor-page" class="page-hidden">
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow">
+                <input type="text" id="note-title" class="w-full text-3xl font-bold text-slate-800 mb-6 border-b-2 pb-2 focus:outline-none focus:border-sky-500" placeholder="請輸入標題...">
+
+                <textarea
+                    id="note-content"
+                    class="w-full h-96 p-4 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition"
+                    placeholder="在這裡開始記錄您的學習重點..."></textarea>
+
+                <div class="mt-6 flex items-center justify-between">
+                    <button id="delete-button" class="bg-red-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-600 transition-colors">
+                        刪除
+                    </button>
+                    <div class="flex items-center space-x-4">
+                        <p id="status-message" class="text-green-600 font-semibold"></p>
+                        <button id="save-button" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">
+                            儲存
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const notesArea = document.getElementById('notes-area');
+            // --- DOM 元素宣告 ---
+            const listPage = document.getElementById('list-page');
+            const editorPage = document.getElementById('editor-page');
+            const notesGrid = document.getElementById('notes-grid');
+            const addNewNoteBtn = document.getElementById('add-new-note-btn');
+            const noteTitleInput = document.getElementById('note-title');
+            const noteContentInput = document.getElementById('note-content');
             const saveButton = document.getElementById('save-button');
+            const deleteButton = document.getElementById('delete-button');
             const statusMessage = document.getElementById('status-message');
+            const headerTitle = document.getElementById('header-title');
 
-            // --- Key設定 ---
-            // 功能: 定義此頁面筆記在瀏覽器中儲存的名稱 (Key)
-            const localStorageKey = 'davie_stockNotes'; // 新的儲存 Key
-            const oldLocalStorageKey = 'davie_chatMessages'; // 舊的聊天紀錄 Key
-            const oldDataKey = 'stock'; // 要從舊資料中提取的分類名稱
+            // --- Key 設定 ---
+            const notesStorageKey = 'davie_stockNotes_v2'; // 新的多筆記儲存 Key
+            const oldNotesKey = 'davie_stockNotes'; // 舊的單篇筆記 Key (用於資料遷移)
+            const oldChatKey = 'davie_chatMessages'; // 更舊的聊天紀錄 Key (用於資料遷移)
+            const oldChatDataKey = 'stock'; // 聊天紀錄中的分類
 
-            // --- 載入筆記 ---
-            // 功能: 頁面載入時，自動從瀏覽器讀取筆記內容
-            const loadNotes = () => {
-                // 1. 優先嘗試讀取新格式的筆記
-                const savedNotes = localStorage.getItem(localStorageKey);
-                if (savedNotes) {
-                    notesArea.value = savedNotes;
-                    return; // 如果有新筆記，就直接載入並結束
+            let currentEditingNoteId = null; // 用來追蹤正在編輯的筆記 ID
+
+            // --- 資料處理函式 ---
+
+            /**
+             * 功能: 從 localStorage 讀取所有筆記
+             * @returns {Array} 筆記陣列，每則筆記格式為 {id, title, content, lastModified}
+             */
+            function getNotes() {
+                const notesJSON = localStorage.getItem(notesStorageKey);
+                // 如果沒有資料，就嘗試從舊格式遷移
+                if (!notesJSON) {
+                    return migrateOldData();
+                }
+                try {
+                    return JSON.parse(notesJSON);
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            /**
+             * 功能: 將筆記陣列儲存到 localStorage
+             * @param {Array} notes - 要儲存的筆記陣列
+             */
+            function saveNotes(notes) {
+                localStorage.setItem(notesStorageKey, JSON.stringify(notes));
+            }
+
+            /**
+             * 功能: 遷移舊資料到新格式
+             * 說明: 這是為了確保您之前的紀錄不會消失。它會依序檢查 v1 筆記和聊天紀錄。
+             * @returns {Array} 遷移後的新格式筆記陣列
+             */
+            function migrateOldData() {
+                const notes = [];
+                // 1. 檢查 v1 的單篇筆記
+                const oldContent = localStorage.getItem(oldNotesKey);
+                if (oldContent && oldContent.trim() !== '') {
+                    notes.push({
+                        id: Date.now(),
+                        title: '從舊版匯入的筆記',
+                        content: oldContent,
+                        lastModified: new Date().toISOString()
+                    });
                 }
 
-                // 2. 如果沒有新格式筆記，嘗試從舊的聊天紀錄中轉換資料
-                const oldMessagesData = localStorage.getItem(oldLocalStorageKey);
-                if (oldMessagesData) {
+                // 2. 檢查更舊的聊天紀錄
+                const oldChatData = localStorage.getItem(oldChatKey);
+                if (oldChatData) {
                     try {
-                        const allMessages = JSON.parse(oldMessagesData);
-                        if (allMessages && allMessages[oldDataKey] && Array.isArray(allMessages[oldDataKey])) {
-                            // 將舊的聊天訊息格式化成一篇完整的筆記
-                            const migratedText = allMessages[oldDataKey]
+                        const allMessages = JSON.parse(oldChatData);
+                        const chatNotes = allMessages[oldChatDataKey];
+                        if (chatNotes && chatNotes.length > 0) {
+                            const migratedText = chatNotes
                                 .map(msg => `[記錄於 ${new Date(msg.timestamp).toLocaleString('zh-TW')}]\n${msg.text}`)
                                 .join('\n\n---\n\n');
-                            
-                            notesArea.value = migratedText;
-                            
-                            // 將轉換後的筆記立即存成新格式，方便下次快速讀取
-                            localStorage.setItem(localStorageKey, migratedText);
-                             statusMessage.textContent = '已成功從舊格式匯入筆記！';
+                            notes.push({
+                                id: Date.now() + 1, // 避免ID重複
+                                title: '從聊天紀錄匯入',
+                                content: migratedText,
+                                lastModified: new Date().toISOString()
+                            });
                         }
-                    } catch (e) {
-                        console.error("無法解析舊的筆記資料:", e);
-                    }
+                    } catch (e) { console.error('遷移聊天紀錄失敗', e); }
                 }
-            };
 
-            // --- 儲存筆記 ---
-            // 功能: 點擊儲存按鈕時，將筆記內容寫入瀏覽器
-            const saveNotes = () => {
-                const notesContent = notesArea.value;
-                localStorage.setItem(localStorageKey, notesContent);
-                
-                // 顯示成功訊息，並在3秒後自動消失
+                if (notes.length > 0) {
+                    saveNotes(notes); // 遷移成功後立刻儲存新格式
+                    // 遷移後可以選擇刪除舊資料，避免重複遷移
+                    localStorage.removeItem(oldNotesKey);
+                    // 注意：這裡我們暫不刪除舊聊天紀錄，以防萬一
+                }
+                return notes;
+            }
+
+            // --- 畫面渲染與切換函式 ---
+
+            /**
+             * 功能: 渲染所有筆記模塊到列表頁
+             */
+            function renderNotesList() {
+                const notes = getNotes();
+                // 清空除了「新增按鈕」以外的所有模塊
+                notesGrid.innerHTML = '';
+                notesGrid.appendChild(addNewNoteBtn);
+
+                // 根據最後修改時間排序，最新的在前面
+                notes.sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
+
+                notes.forEach(note => {
+                    const noteEl = document.createElement('a');
+                    noteEl.href = '#';
+                    noteEl.className = 'note-card aspect-square flex flex-col bg-white rounded-lg p-4 shadow-sm border';
+                    noteEl.dataset.noteId = note.id;
+
+                    // 顯示標題，如果沒有標題則顯示內容片段
+                    const title = note.title || '無標題';
+                    const contentPreview = note.content.substring(0, 100) + (note.content.length > 100 ? '...' : '');
+
+                    noteEl.innerHTML = `
+                        <h3 class="font-bold text-slate-800 mb-2 flex-shrink-0">${title}</h3>
+                        <p class="text-sm text-slate-500 overflow-hidden flex-grow">${contentPreview}</p>
+                        <span class="text-xs text-slate-400 mt-2 self-start flex-shrink-0">${new Date(note.lastModified).toLocaleDateString()}</span>
+                    `;
+
+                    // 將新模塊插入到「新增按鈕」的前面
+                    notesGrid.insertBefore(noteEl, addNewNoteBtn);
+
+                    // 為每個模塊添加點擊事件監聽
+                    noteEl.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showEditorPage(note.id);
+                    });
+                });
+            }
+
+            /**
+             * 功能: 顯示列表頁，隱藏編輯頁
+             */
+            function showListPage() {
+                listPage.classList.remove('page-hidden');
+                editorPage.classList.add('page-hidden');
+                headerTitle.textContent = '股票學習筆記';
+                currentEditingNoteId = null; // 清除正在編輯的ID
+                renderNotesList(); // 每次返回列表都重新渲染，確保資料最新
+            }
+
+            /**
+             * 功能: 顯示編輯頁，隱藏列表頁
+             * @param {number|null} noteId - 要編輯的筆記 ID，如果是 null 代表新增
+             */
+            function showEditorPage(noteId) {
+                listPage.classList.add('page-hidden');
+                editorPage.classList.remove('page-hidden');
+                currentEditingNoteId = noteId;
+
+                if (noteId) { // 編輯現有筆記
+                    const notes = getNotes();
+                    const note = notes.find(n => n.id === noteId);
+                    if (note) {
+                        noteTitleInput.value = note.title;
+                        noteContentInput.value = note.content;
+                        deleteButton.style.display = 'block'; // 顯示刪除按鈕
+                        headerTitle.textContent = '編輯筆記';
+                    }
+                } else { // 新增筆記
+                    noteTitleInput.value = '';
+                    noteContentInput.value = '';
+                    deleteButton.style.display = 'none'; // 隱藏刪除按鈕
+                    headerTitle.textContent = '新增筆記';
+                }
+            }
+
+            // --- 事件處理函式 ---
+
+            // 處理儲存按鈕點擊
+            saveButton.addEventListener('click', () => {
+                const title = noteTitleInput.value.trim();
+                const content = noteContentInput.value.trim();
+
+                if (!title && !content) {
+                    alert('標題和內容不能都為空！');
+                    return;
+                }
+
+                let notes = getNotes();
+                if (currentEditingNoteId) { // 更新現有筆記
+                    const noteIndex = notes.findIndex(n => n.id === currentEditingNoteId);
+                    if (noteIndex > -1) {
+                        notes[noteIndex].title = title;
+                        notes[noteIndex].content = content;
+                        notes[noteIndex].lastModified = new Date().toISOString();
+                    }
+                } else { // 新增筆記
+                    const newNote = {
+                        id: Date.now(),
+                        title: title,
+                        content: content,
+                        lastModified: new Date().toISOString()
+                    };
+                    notes.push(newNote);
+                }
+
+                saveNotes(notes);
                 statusMessage.textContent = '儲存成功！';
-                setTimeout(() => {
-                    statusMessage.textContent = '';
-                }, 3000);
-            };
+                setTimeout(() => statusMessage.textContent = '', 2000);
 
-            // --- 事件監聽 ---
-            saveButton.addEventListener('click', saveNotes);
+                // 儲存後自動返回列表頁
+                setTimeout(() => showListPage(), 500);
+            });
 
-            // --- 初始執行 ---
-            loadNotes();
+            // 處理刪除按鈕點擊
+            deleteButton.addEventListener('click', () => {
+                if (currentEditingNoteId && confirm('確定要刪除這則筆記嗎？')) {
+                    let notes = getNotes();
+                    notes = notes.filter(n => n.id !== currentEditingNoteId);
+                    saveNotes(notes);
+                    showListPage();
+                }
+            });
+
+            // 處理新增按鈕點擊
+            addNewNoteBtn.addEventListener('click', () => {
+                showEditorPage(null); // 傳入 null 代表新增
+            });
+
+
+            // --- 初始載入 ---
+            showListPage();
         });
     </script>
 </body>
