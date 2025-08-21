@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股票學習筆記 | 張達瑋</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <a href="goals.html" class="text-sky-600 hover:text-sky-800 transition font-semibold">
+                &larr; 返回學習與成長
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow">
+            <h1 class="text-3xl font-bold text-slate-800 mb-6 border-b pb-4">股票學習筆記</h1>
+            
+            <textarea 
+                id="notes-area" 
+                class="w-full h-96 p-4 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition" 
+                placeholder="在這裡開始記錄您的股票學習重點..."></textarea>
+            
+            <div class="mt-6 flex items-center justify-end space-x-4">
+                <p id="status-message" class="text-green-600 font-semibold"></p>
+                
+                <button id="save-button" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">
+                    儲存筆記
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const notesArea = document.getElementById('notes-area');
+            const saveButton = document.getElementById('save-button');
+            const statusMessage = document.getElementById('status-message');
+
+            // --- Key設定 ---
+            // 功能: 定義此頁面筆記在瀏覽器中儲存的名稱 (Key)
+            const localStorageKey = 'davie_stockNotes'; // 新的儲存 Key
+            const oldLocalStorageKey = 'davie_chatMessages'; // 舊的聊天紀錄 Key
+            const oldDataKey = 'stock'; // 要從舊資料中提取的分類名稱
+
+            // --- 載入筆記 ---
+            // 功能: 頁面載入時，自動從瀏覽器讀取筆記內容
+            const loadNotes = () => {
+                // 1. 優先嘗試讀取新格式的筆記
+                const savedNotes = localStorage.getItem(localStorageKey);
+                if (savedNotes) {
+                    notesArea.value = savedNotes;
+                    return; // 如果有新筆記，就直接載入並結束
+                }
+
+                // 2. 如果沒有新格式筆記，嘗試從舊的聊天紀錄中轉換資料
+                const oldMessagesData = localStorage.getItem(oldLocalStorageKey);
+                if (oldMessagesData) {
+                    try {
+                        const allMessages = JSON.parse(oldMessagesData);
+                        if (allMessages && allMessages[oldDataKey] && Array.isArray(allMessages[oldDataKey])) {
+                            // 將舊的聊天訊息格式化成一篇完整的筆記
+                            const migratedText = allMessages[oldDataKey]
+                                .map(msg => `[記錄於 ${new Date(msg.timestamp).toLocaleString('zh-TW')}]\n${msg.text}`)
+                                .join('\n\n---\n\n');
+                            
+                            notesArea.value = migratedText;
+                            
+                            // 將轉換後的筆記立即存成新格式，方便下次快速讀取
+                            localStorage.setItem(localStorageKey, migratedText);
+                             statusMessage.textContent = '已成功從舊格式匯入筆記！';
+                        }
+                    } catch (e) {
+                        console.error("無法解析舊的筆記資料:", e);
+                    }
+                }
+            };
+
+            // --- 儲存筆記 ---
+            // 功能: 點擊儲存按鈕時，將筆記內容寫入瀏覽器
+            const saveNotes = () => {
+                const notesContent = notesArea.value;
+                localStorage.setItem(localStorageKey, notesContent);
+                
+                // 顯示成功訊息，並在3秒後自動消失
+                statusMessage.textContent = '儲存成功！';
+                setTimeout(() => {
+                    statusMessage.textContent = '';
+                }, 3000);
+            };
+
+            // --- 事件監聽 ---
+            saveButton.addEventListener('click', saveNotes);
+
+            // --- 初始執行 ---
+            loadNotes();
+        });
+    </script>
+</body>
+</html>
