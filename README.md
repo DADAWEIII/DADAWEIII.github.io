@@ -12,7 +12,9 @@
 - [ ] 完成個人網頁履歷
 
 ## 🛠 技能清單
-# cell culture
+
+cell culture
+python
 
 
 ## ✍️ 學習日誌
