@@ -1,5 +1,3 @@
-# DADAWEIII.github.io
-
  🚀 學習成長紀錄
 ===
 利用 GitHub 記錄網頁開發與程式學習的地方。
