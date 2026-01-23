@@ -4,15 +4,18 @@
  🚀 學習成長紀錄
 ===
 
-## 📅 短期目標
-
+## 📅 短期目標 (short-term goals)
+- [x] 學習 Markdown 基礎
 - [x] 利用 Markdown 記錄學習歷程
-- [ ] 學習 HTML 基礎標籤
+- [ ] 學習 HTML 基礎
+- [ ] 學習 JavaScript 基礎
+- [ ] 學習 CSS/Tailwind CSS 基礎
+- [ ] 學習 HTML 基礎
 - [ ] 增加個人子網頁
 - [ ] 增加介紹內容
 
 
-## 📅 長期目標
+## 📅 長期目標 (long-term goals)
 - [ ] 完成個人網頁履歷
 - [ ] 將 Python 應用於碩論
 
