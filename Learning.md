@@ -14,9 +14,12 @@
 
 ## 🛠 技能清單
 
-*  cell culture  
-*  python 
+### Lab
+* cell culture  
 
+### skill
+* Python
+* html
 
 ## ✍️ 學習日誌
 ### 2024-05-20：GitHub 與 Markdown
