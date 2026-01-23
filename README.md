@@ -13,8 +13,8 @@
 
 ## 🛠 技能清單
 
-**  cell culture
-**  python
+***  cell culture *\n
+***  python *\n
 
 
 ## ✍️ 學習日誌
